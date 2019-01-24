@@ -47,9 +47,13 @@ public class StudentInfo {
 			if (scnr.hasNextInt()) {
 				input = scnr.nextInt();
 				scnr.nextLine();
-				if (input < 1 || input > max) {
-					System.out.println("Congratulations, you entered a number! Perhaps you are capable of entering one between 1-" + max + "... ");
-					input = 0;
+				try {
+					if (input < 1 || input > max) {
+						System.out.println("Congratulations, you entered a number! Perhaps you are capable of entering one between 1-" + max + "... ");
+						input = 0;
+					}					
+				} catch (IndexOutOfBoundsException ex) {
+					System.out.println("Oops, that data is unavailable...");
 				}
 			} else {
 				scnr.nextLine();
