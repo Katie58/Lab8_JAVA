@@ -1,4 +1,5 @@
 package lab8;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class StudentInfo {
@@ -29,6 +30,10 @@ public class StudentInfo {
 	
 	private static int userInputStudent() {//returns student index
 		System.out.println("Which student would you like to learn more about? (enter a number 1-" + (Students.javaClass().size() - 1) + "): ");	
+		for (int i = 1; i < (Students.javaClass().size()); i++) {
+			System.out.println(i + ". " + Students.getFirstName(i));
+		}
+		System.out.print("Enter name or number: ");		
 		return validateInputRange(Students.javaClass().size() - 1);
 
 	}
@@ -38,10 +43,12 @@ public class StudentInfo {
 		for (int i = 1; i < Students.getStudent(0).size(); i++) {
 			System.out.println(i + ". " + Students.getStudent(0).get(i));
 		}	
+		System.out.print("Enter description or number: ");
 		return validateInputRange(Students.getStudent(0).size() - 1);
 	}
 	
 	private static int validateInputRange(int max) {
+		boolean valid = false;
 		int input = 0;
 		while (input == 0) {
 			if (scnr.hasNextInt()) {
@@ -54,6 +61,29 @@ public class StudentInfo {
 					}					
 				} catch (IndexOutOfBoundsException ex) {
 					System.out.println("Oops, that data is unavailable...");
+				}
+			} else if (scnr.hasNextLine()) {
+				String name = scnr.nextLine();
+				if (max == (Students.javaClass().size() - 1)) {
+					for (int i = 1; i < max + 1; i++) {
+						if (Students.getFirstName(i).contains(name)) {
+							input = i;
+							valid = true;
+						}					
+					}
+					if (!valid) {
+						System.out.println("Please don't upset anyone by spelling their name wrong, try again...");						
+					}
+				} else if (max == (Students.getStudent(0).size() - 1)) {
+					for (int i = 1; i < max + 1; i++) {
+						if (Students.getStudent(0).get(i).toString().contains(name)) {
+							input = i;
+							valid = true;
+						}					
+					}
+					if (!valid) {
+						System.out.println("Capitization and spelling are important, try again...");						
+					}
 				}
 			} else {
 				scnr.nextLine();
